@@ -23,7 +23,8 @@ class action_plugin_dwedit extends DokuWiki_Action_Plugin
        }
       
     }    
-    function register(&$controller)
+
+    function register(Doku_Event_Handler $controller)
     {
         $controller->register_hook('TEMPLATE_PAGETOOLS_DISPLAY', 'BEFORE', $this, 'dwedit_action_link');
     }
