@@ -1,0 +1,10 @@
+This plugin will automatically add a DW Edit button to the page tools which appear at the right of the Dokuwiki editor in the standard Dokuwiki template.. The icon is like the Edit button.  Clickiing on the button will openm the native Dokuwiki editor.  It opens to the entire page being edited, iy does not support section editing.
+
+For users who are not using the Dokuwiki template, a link can be added anywhere on the template page  using the following syntax:
+    <?php tpl_toolsevent('dweditlink', array());?>
+If already in a php block, use: 
+     tpl_toolsevent('dweditlink', array());
+     
+ The appearance of the link can be styled in the syle.css file, using span.dwedit, which is curren tly set to: 
+      font-size:  10pt;  padding-left: 4px; padding-lright: 4px;
+      

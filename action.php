@@ -15,18 +15,20 @@ if (!defined('DOKU_INC'))
 class action_plugin_dwedit extends DokuWiki_Action_Plugin
 {
     var $ckgedit_loaded = false;
-
+    var $ckgedit_helper;
+    var $helper;
     function __construct() {
        $list = plugin_list('helper');
        if(in_array('ckgedit',$list)) {
            $this->ckgedit_loaded=true;
+           $this->helper = plugin_load('helper', 'ckgedit');
        }
-      
     }    
 
     function register(Doku_Event_Handler $controller)
     {
-        $controller->register_hook('TEMPLATE_PAGETOOLS_DISPLAY', 'BEFORE', $this, 'dwedit_action_link');
+        $controller->register_hook('TEMPLATE_PAGETOOLS_DISPLAY', 'BEFORE', $this, 'dwedit_action_link',array('page_tools'));
+        $controller->register_hook('TEMPLATE_DWEDITLINK_DISPLAY', 'BEFORE', $this, 'dwedit_action_link', array('user'));
     }
     
     function dwedit_action_link(&$event, $param)
@@ -36,13 +38,16 @@ class action_plugin_dwedit extends DokuWiki_Action_Plugin
             return;
         }
         
-        global $ID;
-
-        $event->data['items']['dw_edit'] = '<li class="dwedit"><a href="doku.php?id=' . $ID .
-         '&do=edit&mode=dwiki&fck_preview_mode=nil" ' . 'class="action edit" rel="nofollow" title="DW Edit"><span>DW Edit</span></a></li>';
+           global $ID;
+           $name = $this->helper->getLang('btn_dw_edit');  
+           $link = '<a href="doku.php?id=' . $ID . '&do=edit&mode=dwiki&fck_preview_mode=nil" ' . 'class="action edit" rel="nofollow" title="DW Edit"><span>' . $name.'</span></a>';
+           if($param[0] == 'page_tools') {
+               $event->data['items']['dw_edit'] = '<li>' . $link .'</li>';
+           }
+           else { 
+             $event->data['items']['dwedit'] = '<span class = "dwedit">' . $link  .'</span>';          
+           }
 
     }
-    
- 
 }
 ?>
