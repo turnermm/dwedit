@@ -23,6 +23,10 @@ class action_plugin_dwedit extends DokuWiki_Action_Plugin
            $this->ckgedit_loaded=true;
            $this->helper = plugin_load('helper', 'ckgedit');
        }
+       else if(in_array('ckgdoku',$list)) {
+           $this->ckgedit_loaded=true;
+           $this->helper = plugin_load('helper', 'ckgdoku');
+       }
     }    
 
     function register(Doku_Event_Handler $controller)
