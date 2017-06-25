@@ -4,5 +4,10 @@ background: url(13_dwedit.png) right  no-repeat  !important;
 
 .pagetools-item(dwedit, 13);
 
-span.dwedit  font-size:  10pt;  padding-left: 4px; padding-right: 4px;
+span.dwedit {
+  font-size:  10pt;
+  padding-left: 4px;
+  padding-right: 4px;
+ }
+
 
