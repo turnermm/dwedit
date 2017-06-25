@@ -15,7 +15,6 @@ if (!defined('DOKU_INC'))
 class action_plugin_dwedit extends DokuWiki_Action_Plugin
 {
     var $ckgedit_loaded = false;
-    var $ckgedit_helper;
     var $helper;
     function __construct() {
        $list = plugin_list('helper');

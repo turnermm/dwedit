@@ -1,7 +1,7 @@
 base   dwedit
 author Myron Turner
 email  turnermm02@shaw.ca
-date   2017-04-04
+date   2017-06-24
 name   dwedit
 desc   adds dokuwiki native editor icon to  utils
 url    https://www.dokuwiki.org/plugin:fckg
