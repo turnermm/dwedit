@@ -44,9 +44,8 @@ class action_plugin_dwedit extends DokuWiki_Action_Plugin
            global $ID, $ACT, $INPUT;
            $FG_cookie = $_COOKIE['FCKG_USE'];           
            $mode = $INPUT->str('mode', 'fckg');
-           if($ACT == 'edit' && ($FG_cookie == '_false_' || $mode == 'dwiki')) return;
+           if($ACT == 'edit' || ($FG_cookie == '_false_' || $mode == 'dwiki')) return;
            $name = $this->helper->getLang('btn_dw_edit');  
-           $event->data['view'] = 'detail';
            $link = '<a href="doku.php?id=' . $ID . '&do=edit&mode=dwiki&fck_preview_mode=nil" ' . 'class="action edit" rel="nofollow" title="DW Edit"><span>' . $name.'</span></a>';
            if($param[0] == 'page_tools') {
                $event->data['items']['dw_edit'] = '<li>' . $link .'</li>';
