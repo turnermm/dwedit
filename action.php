@@ -46,7 +46,7 @@ class action_plugin_dwedit extends DokuWiki_Action_Plugin
         
         $FG_cookie = $_COOKIE['FCKG_USE'];           
         $mode = $INPUT->str('mode', 'fckg');
-        if($ACT == 'edit' && ($FG_cookie == '_false_' || $mode == 'dwiki')) return;
+        if($FG_cookie == '_false_' || $mode == 'dwiki') return;
 
         /* insert button at second position  */
         $params = array('do' => 'edit');
