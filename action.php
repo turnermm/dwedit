@@ -36,24 +36,49 @@ class action_plugin_dwedit extends DokuWiki_Action_Plugin
     
     function dwedit_action_link(&$event, $param)
     {
-        if (!$_SERVER['REMOTE_USER'] || ! $this->ckgedit_loaded) 
+        global $ACT, $ID, $REV, $INFO, $INPUT;
+
+        /* do I need to insert button ?  */
+        if (!$this->ckgedit_loaded || $event->data['view'] != 'main' || $ACT != 'show')
         {
             return;
         }
         
-           global $ID, $ACT, $INPUT;
-           $FG_cookie = $_COOKIE['FCKG_USE'];           
-           $mode = $INPUT->str('mode', 'fckg');
-           if($ACT == 'edit' && ($FG_cookie == '_false_' || $mode == 'dwiki')) return;
-           $name = $this->helper->getLang('btn_dw_edit');  
-           $event->data['view'] = 'detail';
-           $link = '<a href="doku.php?id=' . $ID . '&do=edit&mode=dwiki&fck_preview_mode=nil" ' . 'class="action edit" rel="nofollow" title="DW Edit"><span>' . $name.'</span></a>';
-           if($param[0] == 'page_tools') {
-               $event->data['items']['dw_edit'] = '<li>' . $link .'</li>';
-           }
-           else { 
-             $event->data['items']['dwedit'] = '<span class = "dwedit">' . $link  .'</span>';          
-           }
+        $FG_cookie = $_COOKIE['FCKG_USE'];           
+        $mode = $INPUT->str('mode', 'fckg');
+        if($ACT == 'edit' && ($FG_cookie == '_false_' || $mode == 'dwiki')) return;
+
+        /* insert button at second position  */
+        $params = array('do' => 'edit');
+        if($REV) {
+            $params['rev'] = $REV;
+        }
+        $params['mode'] = 'dwiki';
+        $params['fck_preview_mode'] = 'nil';
+
+        $name = $this->helper->getLang('btn_dw_edit');  
+
+        if ($INFO['perm'] > AUTH_READ) {
+            $title = 'Clasic DokuWiki Editor';
+            $name = 'DokuWiki Editor';
+            $edclass = 'dwedit';
+        }
+        else {
+            $title = 'Clasic DokuWiki View';
+            $name = 'DokuWiki View';
+            $edclass = 'dwview';
+        }
+        $link = '<a href="' . wl($ID, $params) . '" class="action ' . $edclass . '" rel="nofollow" title="' . $title . '"><span>' . $name . '</span></a>';
+
+        if($param[0] == 'page_tools') {
+            $link = '<li class = "dwedit">' . $link .'</li>';
+        }
+        else { 
+            $link = '<span class = "dwedit">' . $link  .'</span>';          
+        }
+
+        $event->data['items'] = array_slice($event->data['items'], 0, 1, true) +
+            array('dwedit' => $link) + array_slice($event->data['items'], 1, NULL, true);
 
     }
 }
