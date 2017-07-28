@@ -5,6 +5,7 @@
  * @author     Anonymous
  * @author     Kamil Demecki <kodstark@gmail.com>
  * @author     Myron Turner <turnermm02@shaw.ca>
+ * @author     Davor Turkalj <turki.bsc@gmail.com>
  */
 
 if (!defined('DOKU_INC')) 
@@ -36,23 +37,60 @@ class action_plugin_dwedit extends DokuWiki_Action_Plugin
     
     function dwedit_action_link(&$event, $param)
     {
-        if (!$_SERVER['REMOTE_USER'] || ! $this->ckgedit_loaded) 
+        global $ACT, $ID, $REV, $INFO, $INPUT;
+
+        /* do I need to insert button ?  */
+        if (!$this->ckgedit_loaded || $event->data['view'] != 'main' || $ACT != 'show')
         {
             return;
         }
         
-           global $ID, $ACT, $INPUT;
-           $FG_cookie = $_COOKIE['FCKG_USE'];           
-           $mode = $INPUT->str('mode', 'fckg');
-           if($ACT == 'edit' || ($FG_cookie == '_false_' || $mode == 'dwiki')) return;
-           $name = $this->helper->getLang('btn_dw_edit');  
-           $link = '<a href="doku.php?id=' . $ID . '&do=edit&mode=dwiki&fck_preview_mode=nil" ' . 'class="action edit" rel="nofollow" title="DW Edit"><span>' . $name.'</span></a>';
-           if($param[0] == 'page_tools') {
-               $event->data['items']['dw_edit'] = '<li>' . $link .'</li>';
-           }
-           else { 
-             $event->data['items']['dwedit'] = '<span class = "dwedit">' . $link  .'</span>';          
-           }
+
+        $mode = $INPUT->str('mode', 'fckg');
+        if($mode == 'dwiki') return;
+
+        /* check excluded namespaces */
+        $dwedit_ns = $this->helper->getConf('dwedit_ns');
+        if($dwedit_ns) {
+            $ns_choices = explode(',',$dwedit_ns);
+            foreach($ns_choices as $ns) {
+              $ns = trim($ns);
+              if(preg_match("/$ns/",$_REQUEST['id'])) return;
+            }
+        }
+        
+        /* insert button at second position  */
+        $params = array('do' => 'edit');
+        if($REV) {
+            $params['rev'] = $REV;
+        }
+        $params['mode'] = 'dwiki';
+        $params['fck_preview_mode'] = 'nil';
+
+        $name = $this->helper->getLang('btn_dw_edit');  
+
+        if ($INFO['perm'] > AUTH_READ) {
+            $title = 'Clasic DokuWiki Editor';
+            $name = 'DokuWiki Editor';
+            $edclass = 'dwedit';
+        }
+        else {
+            $title = 'Clasic DokuWiki View';
+            $name = 'DokuWiki View';
+            $edclass = 'dwview';
+        }
+        $link = '<a href="' . wl($ID, $params) . '" class="action ' . $edclass . '" rel="nofollow" title="' . $title . '"><span>' . $name . '</span></a>';
+
+        if($param[0] == 'page_tools') {
+            $link = '<li class = "dwedit">' . $link .'</li>';
+        }
+        else { 
+            $link = '<span class = "dwedit">' . $link  .'</span>';          
+        }
+
+        $event->data['items'] = array_slice($event->data['items'], 0, 1, true) +
+            array('dwedit' => $link) + array_slice($event->data['items'], 1, NULL, true);
+
 
     }
 }

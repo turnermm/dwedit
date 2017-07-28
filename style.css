@@ -1,13 +1,49 @@
-li.dwedit {
-background: url(13_dwedit.png) right  no-repeat  !important;
-} 
+/**
+ * dwedit dwedit pagetool icon
+ */
 
-.pagetools-item(dwedit, 13);
+/* dwedit icon */
+#dokuwiki__pagetools ul li a.dwedit {
+    background-position: right 0;
+}
+#dokuwiki__pagetools ul li a.dwedit:before {
+    content: url(dwedit-sprite.png);
+    margin-top: 0;
+}
+#dokuwiki__pagetools:hover ul li a.dwedit,
+#dokuwiki__pagetools ul li a.dwedit:focus,
+#dokuwiki__pagetools ul li a.dwedit:active {
+    background-image: url(dwedit-sprite.png);
+}
+#dokuwiki__pagetools ul li a.dwedit:hover,
+#dokuwiki__pagetools ul li a.dwedit:active,
+#dokuwiki__pagetools ul li a.dwedit:focus {
+    background-position: right -45px;
+}
+
+/* dwview icon */
+#dokuwiki__pagetools ul li a.dwview {
+    background-position: right 0;
+}
+#dokuwiki__pagetools ul li a.dwview:before {
+    content: url(dwview-sprite.png);
+    margin-top: 0;
+}
+#dokuwiki__pagetools:hover ul li a.dwview,
+#dokuwiki__pagetools ul li a.dwview:focus,
+#dokuwiki__pagetools ul li a.dwview:active {
+    background-image: url(dwview-sprite.png);
+}
+#dokuwiki__pagetools ul li a.dwview:hover,
+#dokuwiki__pagetools ul li a.dwview:active,
+#dokuwiki__pagetools ul li a.dwview:focus {
+    background-position: right -45px;
+}
 
 span.dwedit {
-  font-size:  10pt;
+  font-size:  9pt;
   padding-left: 4px;
   padding-right: 4px;
+  margin-left:6px; margin-right:4px;
  }
-
-
+         
