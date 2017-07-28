@@ -5,6 +5,7 @@
  * @author     Anonymous
  * @author     Kamil Demecki <kodstark@gmail.com>
  * @author     Myron Turner <turnermm02@shaw.ca>
+ * @author     Davor Turkalj <turki.bsc@gmail.com>
  */
 
 if (!defined('DOKU_INC')) 
@@ -47,6 +48,16 @@ class action_plugin_dwedit extends DokuWiki_Action_Plugin
         $mode = $INPUT->str('mode', 'fckg');
         if($mode == 'dwiki') return;
 
+        /* check excluded namespaces */
+        $dwedit_ns = $this->helper->getConf('dwedit_ns');
+        if($dwedit_ns) {
+            $ns_choices = explode(',',$dwedit_ns);
+            foreach($ns_choices as $ns) {
+              $ns = trim($ns);
+              if(preg_match("/$ns/",$_REQUEST['id'])) return;
+            }
+        }
+        
         /* insert button at second position  */
         $params = array('do' => 'edit');
         if($REV) {
