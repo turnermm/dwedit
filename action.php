@@ -70,12 +70,12 @@ class action_plugin_dwedit extends DokuWiki_Action_Plugin
         $name = $this->helper->getLang('btn_dw_edit');  
 
         if ($INFO['perm'] > AUTH_READ) {
-            $title = 'Clasic DokuWiki Editor';
+            $title = 'Classic DokuWiki Editor';
             $name = 'DokuWiki Editor';
             $edclass = 'dwedit';
         }
         else {
-            $title = 'Clasic DokuWiki View';
+            $title = 'Classic DokuWiki View';
             $name = 'DokuWiki View';
             $edclass = 'dwview';
         }
