@@ -37,7 +37,7 @@ class action_plugin_dwedit extends DokuWiki_Action_Plugin
     
     function dwedit_action_link(&$event, $param)
     {
-        global $ACT, $ID, $REV, $INFO, $INPUT;
+        global $ACT, $ID, $REV, $INFO, $INPUT, $USERINFO,$conf;
 
         /* do I need to insert button ?  */
         if (!$this->ckgedit_loaded || $event->data['view'] != 'main' || $ACT != 'show')
@@ -45,7 +45,7 @@ class action_plugin_dwedit extends DokuWiki_Action_Plugin
             return;
         }
         
-
+        if(!isset($USERINFO) && strpos($conf['disableactions'], 'source') !== false) return;
         $mode = $INPUT->str('mode', 'fckg');
         if($mode == 'dwiki') return;
 
