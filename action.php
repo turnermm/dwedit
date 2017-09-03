@@ -2,8 +2,6 @@
 /**
  * Action adding DW Edit button to page tools (useful with fckedit)
  *
- * @author     Anonymous
- * @author     Kamil Demecki <kodstark@gmail.com>
  * @author     Myron Turner <turnermm02@shaw.ca>
  * @author     Davor Turkalj <turki.bsc@gmail.com>
  */
@@ -18,6 +16,7 @@ class action_plugin_dwedit extends DokuWiki_Action_Plugin
     var $ckgedit_loaded = false;
     var $helper;
     function __construct() {
+    /* is either ckgdoku or ckgedit enabled and if so get a reference to the helper */
        $list = plugin_list('helper');
        if(in_array('ckgedit',$list)) {
            $this->ckgedit_loaded=true;
@@ -31,8 +30,20 @@ class action_plugin_dwedit extends DokuWiki_Action_Plugin
 
     function register(Doku_Event_Handler $controller)
     {
+    $controller->register_hook('MENU_ITEMS_ASSEMBLY', 'AFTER', $this, 'addsvgbutton', array());
+    /*  discontinued/deprecdated hooks */
         $controller->register_hook('TEMPLATE_PAGETOOLS_DISPLAY', 'BEFORE', $this, 'dwedit_action_link',array('page_tools'));
         $controller->register_hook('TEMPLATE_DWEDITLINK_DISPLAY', 'BEFORE', $this, 'dwedit_action_link', array('user'));
+    
+}
+ 
+
+    public function addsvgbutton(Doku_Event $event) {      
+             /* if this is not a page OR ckgedit/ckgedoku is not  active -> return */          
+       if($event->data['view'] != 'page' || !$this->ckgedit_loaded) return;           
+       $btn = $this->helper->getLang('btn_dw_edit');  // get the button's name from the currently enabled ckg_  plugin
+       if(!$btn) $btn = 'DW Edit';           
+       array_splice($event->data['items'], -1, 0, [new \dokuwiki\plugin\dwedit\MenuItem($btn)]);
     }
     
     function dwedit_action_link(&$event, $param)
