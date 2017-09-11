@@ -39,7 +39,7 @@ class MenuItem extends AbstractItem {
         $this->params['fck_preview_mode'] = 'nil';        
         
         if ($INFO['perm'] < AUTH_EDIT) {   // use alternate icon if user does not have edit permission
-            $this->svg =  __DIR__ . '/dwedit_view.svg';
+            $this->svg =  __DIR__ . '/book-open.svg';
         }
     }
 
