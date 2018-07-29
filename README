@@ -6,6 +6,6 @@ For users who are not using the Dokuwiki template, a link can be added anywhere 
 If already in a php block, use: 
      tpl_toolsevent('dweditlink', array());
      
- The appearance of the link can be styled in the syle.css file, using span.dwedit, which is currently set to: 
+ The appearance of the link can be styled in the style.css file, using span.dwedit, which is currently set to: 
       font-size:  10pt;  padding-left: 4px; padding-right: 4px;
       
