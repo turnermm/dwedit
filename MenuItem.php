@@ -37,7 +37,7 @@ class MenuItem extends AbstractItem {
         /*switching over to the native dw editor rquires two additional http paramters */
         $this->params['mode'] = 'dwiki';   
         $this->params['fck_preview_mode'] = 'nil';        
-        
+        $this->params['do']="edit"; 
         if ($INFO['perm'] < AUTH_EDIT) {   // use alternate icon if user does not have edit permission
             $this->svg =  __DIR__ . '/book-open.svg';
         }
@@ -56,8 +56,10 @@ class MenuItem extends AbstractItem {
         Note:    In the current case the name is guaranteed by
         having been hard-coded in the event of a name not having been found        
      */
+	      
          $hlp = plugin_load('action', 'dwedit');   
-        return $hlp->getLang('btn_dw_edit');
+         $btn_name = $hlp->getLang('btn_dw_edit');
+		 return  $btn_name ?  $btn_name : "dwedit";
        
         
     }
