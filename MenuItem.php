@@ -12,7 +12,7 @@ use dokuwiki\Menu\Item\AbstractItem;
 class MenuItem extends AbstractItem {
 
     /** @var string do action for this plugin */
-    protected $type = 'edit';
+    protected $type = 'dwedit';
     private  $btn_name;
 
     /** @var string icon file */
