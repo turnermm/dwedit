@@ -39,6 +39,7 @@ class action_plugin_dwedit extends DokuWiki_Action_Plugin
  
 
     public function addsvgbutton(Doku_Event $event) {      
+       if(method_exists($this->helper,'dw_edit_displayed') && $this->helper->dw_edit_displayed()) return;     
              /* if this is not a page OR ckgedit/ckgedoku is not  active -> return */          
        if($event->data['view'] != 'page' || !$this->ckgedit_loaded) return;           
        $btn = $this->helper->getLang('btn_dw_edit');  // get the button's name from the currently enabled ckg_  plugin
