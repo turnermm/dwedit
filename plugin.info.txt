@@ -1,7 +1,7 @@
 base   dwedit
 author Myron Turner
 email  turnermm02@shaw.ca
-date 2020-09-30
+date 2022-09-27
 name   dwedit
 desc   adds dokuwiki native editor icon to  utils
 url    https://www.dokuwiki.org/plugin:dwedit
